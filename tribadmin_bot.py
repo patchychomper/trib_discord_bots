@@ -1,6 +1,5 @@
 import discord
 import os
-from discord.ext import commands
 from dotenv import load_dotenv
 from util.csv_url import CsvGetter
 
@@ -18,18 +17,18 @@ def main():
     msgs = CsvGetter(CONTENT).data
 
     @client.event
-    @commands.has_role('admin')
     async def on_message(message):
-        if message.author == client.user:
-            return
-        term = message.content.lstrip(CMD_PREFIX)
-        if term in msgs:
-            response = msgs[term]
-            await message.channel.send(response)
-        elif message.content == 'raise-exception':
-            raise discord.DiscordException
-        elif message.content.startswith('!'):
-            await message.channel.send("I don't understand that command.")
+        if 'admin' in [role.name for role in message.author.roles]:
+            if message.author == client.user:
+                return
+            term = message.content.lstrip(CMD_PREFIX)
+            if term in msgs:
+                response = msgs[term]
+                await message.channel.send(response)
+            elif message.content.startswith('!'):
+                await message.channel.send("I don't understand that command.")
+            elif message.content == 'raise-exception':
+                raise discord.DiscordException
 
     try:
         client.run(TOKEN)
