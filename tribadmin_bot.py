@@ -17,6 +17,14 @@ def main():
     msgs = CsvGetter(CONTENT).data
 
     @client.event
+    async def on_ready():
+        print(f'The bot has successfully connected!')
+
+    @client.event
+    async def on_member_join(member):
+        await member.send(f'Welcome to the TRIB Discord server, {member.name}, please look around!')
+
+    @client.event
     async def on_message(message):
         if 'admin' in [role.name for role in message.author.roles]:
             if message.author == client.user:
