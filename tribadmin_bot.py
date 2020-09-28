@@ -52,7 +52,7 @@ def main():
             response = HelpCreate(msgs.entries).final_help
             for resp in response:
                 await message.author.send(resp)
-        elif message.content.startswith('!'):
+        elif message.content.startswith(CMD_PREFIX):
             await message.channel.send("I don't understand that command.")
         elif message.content == 'raise-exception':
             raise discord.DiscordException
