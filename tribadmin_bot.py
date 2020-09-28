@@ -45,7 +45,7 @@ def main():
             response = msgs.data[term]
             await message.channel.send(response)
         elif term == 'entries':
-            response = HelpCreate(msgs.entries).final_entries
+            response = HelpCreate(msgs.entries, cmd_char=CMD_PREFIX).final_entries
             for resp in response:
                 await message.author.send(resp)
         elif term == 'help':

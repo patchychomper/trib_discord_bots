@@ -67,6 +67,7 @@ class HelpCreate:
         :return:
         """
         content = {'help': {'command': 'help', 'descrip': 'This help page.'},
-                   'entries': {'command': 'entries', 'descrip': 'List all available FAQs.'}
+                   'entries': {'command': 'entries', 'descrip': 'List all available FAQs.'},
+                   'faq': {'command': '{FAQ}', 'descrip': 'FAQ name or number, as listed in /entries.'}
         }
         return content
