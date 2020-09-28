@@ -14,6 +14,7 @@ CMD_PREFIX = os.getenv('CMD_PREFIX')
 def check_roles(disc_roles, roles=('mentor', 'core', 'admin')):
     """
     Check the list of roles to see if you can run the command.
+    Add discord_roles = [role.name for role in message.author.roles] to get list of all user roles.
     :return:
     """
     for role in roles:
@@ -37,22 +38,20 @@ def main():
 
     @client.event
     async def on_message(message):
-        discord_roles = [role.name for role in message.author.roles]
-        if check_roles(discord_roles):
-            if message.author == client.user:
-                return
-            term = message.content.lstrip(CMD_PREFIX)
-            if term.lower() in msgs.data:
-                response = msgs.data[term]
-                await message.channel.send(response)
-            elif term == 'help':
-                response = HelpCreate(msgs.help_info).final_help
-                for resp in response:
-                    await message.channel.send(resp)
-            elif message.content.startswith('!'):
-                await message.channel.send("I don't understand that command.")
-            elif message.content == 'raise-exception':
-                raise discord.DiscordException
+        if message.author == client.user:
+            return
+        term = message.content.lstrip(CMD_PREFIX)
+        if term.lower() in msgs.data:
+            response = msgs.data[term]
+            await message.channel.send(response)
+        elif term == 'help':
+            response = HelpCreate(msgs.help_info).final_help
+            for resp in response:
+                await message.author.send(resp)
+        elif message.content.startswith('!'):
+            await message.channel.send("I don't understand that command.")
+        elif message.content == 'raise-exception':
+            raise discord.DiscordException
 
     try:
         client.run(TOKEN)
