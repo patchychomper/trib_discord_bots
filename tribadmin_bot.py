@@ -11,6 +11,17 @@ CONTENT = os.getenv('TRIB_CONTENT_JSON')
 CMD_PREFIX = os.getenv('CMD_PREFIX')
 
 
+def check_roles(disc_roles, roles=('mentor', 'core', 'admin')):
+    """
+    Check the list of roles to see if you can run the command.
+    :return:
+    """
+    for role in roles:
+        if role in disc_roles:
+            return True
+    return False
+
+
 def main():
 
     client = discord.Client()
@@ -26,7 +37,8 @@ def main():
 
     @client.event
     async def on_message(message):
-        if 'admin' in [role.name for role in message.author.roles]:
+        discord_roles = [role.name for role in message.author.roles]
+        if check_roles(discord_roles):
             if message.author == client.user:
                 return
             term = message.content.lstrip(CMD_PREFIX)
