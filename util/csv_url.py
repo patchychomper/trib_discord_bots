@@ -54,7 +54,7 @@ class JsonGetter(UrlData):
         super().__init__(url)
         self.my_json = json.loads(self.r.text)
         self.data = self._create_json_msgs()
-        self.help_info = self._create_help_blob()
+        self.entries = self._create_entries_blob()
 
     def _create_json_msgs(self):
         """
@@ -71,7 +71,7 @@ class JsonGetter(UrlData):
             msgs[long_name] = answer
         return msgs
 
-    def _create_help_blob(self):
+    def _create_entries_blob(self):
         """
         Create an appropriate structure to provide information for the help page.
         :return:
@@ -80,8 +80,15 @@ class JsonGetter(UrlData):
         for entry in self.my_json:
             short_name = entry['FAQ_Number'].lstrip('0')
             long_name = entry['Reference_Name']
-            question = entry['Full_Question']
+            long_quest = entry['Full_Question']
+            short_quest = entry['Short_Question']
+            if short_quest:
+                question = short_quest
+            else:
+                question = long_quest
             help_info[short_name] = {'short_name': short_name,
                                      'long_name': long_name,
-                                     'question': question}
+                                     'question': question,
+                                     'full_question': long_quest,
+                                     'short_question': short_quest}
         return help_info

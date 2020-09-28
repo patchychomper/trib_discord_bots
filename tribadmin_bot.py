@@ -44,8 +44,12 @@ def main():
         if term.lower() in msgs.data:
             response = msgs.data[term]
             await message.channel.send(response)
+        elif term == 'entries':
+            response = HelpCreate(msgs.entries).final_entries
+            for resp in response:
+                await message.author.send(resp)
         elif term == 'help':
-            response = HelpCreate(msgs.help_info).final_help
+            response = HelpCreate(msgs.entries).final_help
             for resp in response:
                 await message.author.send(resp)
         elif message.content.startswith('!'):
