@@ -1,8 +1,8 @@
 import discord
 import os
 from dotenv import load_dotenv
-from util.csv_url import CsvGetter, JsonGetter
-
+from util.csv_url import JsonGetter
+from help_page import HelpCreate
 
 # Globals.
 load_dotenv()
@@ -14,7 +14,7 @@ CMD_PREFIX = os.getenv('CMD_PREFIX')
 def main():
 
     client = discord.Client()
-    msgs = JsonGetter(CONTENT).data
+    msgs = JsonGetter(CONTENT)
 
     @client.event
     async def on_ready():
@@ -30,9 +30,13 @@ def main():
             if message.author == client.user:
                 return
             term = message.content.lstrip(CMD_PREFIX)
-            if term in msgs:
-                response = msgs[term]
+            if term in msgs.data:
+                response = msgs.data[term]
                 await message.channel.send(response)
+            elif term == 'help':
+                response = HelpCreate(msgs.help_info).final_help
+                for resp in response:
+                    await message.channel.send(resp)
             elif message.content.startswith('!'):
                 await message.channel.send("I don't understand that command.")
             elif message.content == 'raise-exception':

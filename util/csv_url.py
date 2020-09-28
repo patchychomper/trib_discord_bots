@@ -1,12 +1,15 @@
 import csv
 import json
 import requests
+from collections import OrderedDict
 from io import StringIO
+
 
 class UrlData:
     def __init__(self, url):
         self.url = url
         self.r = requests.get(self.url, allow_redirects=True)
+
 
 class CsvGetter(UrlData):
 
@@ -27,6 +30,7 @@ class CsvGetter(UrlData):
             msg = row[1]
             msgs[key] = msg
         return msgs
+
 
 class JsonGetter(UrlData):
     """
@@ -50,6 +54,7 @@ class JsonGetter(UrlData):
         super().__init__(url)
         self.my_json = json.loads(self.r.text)
         self.data = self._create_json_msgs()
+        self.help_info = self._create_help_blob()
 
     def _create_json_msgs(self):
         """
@@ -65,3 +70,18 @@ class JsonGetter(UrlData):
             msgs[short_name] = answer
             msgs[long_name] = answer
         return msgs
+
+    def _create_help_blob(self):
+        """
+        Create an appropriate structure to provide information for the help page.
+        :return:
+        """
+        help_info = OrderedDict()
+        for entry in self.my_json:
+            short_name = entry['FAQ_Number']
+            long_name = entry['Reference_Name']
+            question = entry['Full_Question']
+            help_info[short_name] = {'short_name': short_name,
+                                     'long_name': long_name,
+                                     'question': question}
+        return help_info
