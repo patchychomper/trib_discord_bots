@@ -1,20 +1,20 @@
 import discord
 import os
 from dotenv import load_dotenv
-from util.csv_url import CsvGetter
+from util.csv_url import CsvGetter, JsonGetter
 
 
 # Globals.
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
-CONTENT = os.getenv('TRIB_CONTENT')
+CONTENT = os.getenv('TRIB_CONTENT_JSON')
 CMD_PREFIX = os.getenv('CMD_PREFIX')
 
 
 def main():
 
     client = discord.Client()
-    msgs = CsvGetter(CONTENT).data
+    msgs = JsonGetter(CONTENT).data
 
     @client.event
     async def on_ready():
