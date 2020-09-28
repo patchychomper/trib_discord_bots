@@ -64,7 +64,7 @@ class JsonGetter(UrlData):
         """
         msgs = {}
         for entry in self.my_json:
-            short_name = entry['FAQ_Number']
+            short_name = entry['FAQ_Number'].lstrip('0')
             long_name = entry['Reference_Name']
             answer = entry['Answer']
             msgs[short_name] = answer
@@ -78,7 +78,7 @@ class JsonGetter(UrlData):
         """
         help_info = OrderedDict()
         for entry in self.my_json:
-            short_name = entry['FAQ_Number']
+            short_name = entry['FAQ_Number'].lstrip('0')
             long_name = entry['Reference_Name']
             question = entry['Full_Question']
             help_info[short_name] = {'short_name': short_name,
