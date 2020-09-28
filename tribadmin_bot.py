@@ -42,7 +42,7 @@ def main():
             if message.author == client.user:
                 return
             term = message.content.lstrip(CMD_PREFIX)
-            if term in msgs.data:
+            if term.lower() in msgs.data:
                 response = msgs.data[term]
                 await message.channel.send(response)
             elif term == 'help':

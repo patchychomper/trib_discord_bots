@@ -65,7 +65,7 @@ class JsonGetter(UrlData):
         msgs = {}
         for entry in self.my_json:
             short_name = entry['FAQ_Number'].lstrip('0')
-            long_name = entry['Reference_Name']
+            long_name = entry['Reference_Name'].lower()
             answer = entry['Answer']
             msgs[short_name] = answer
             msgs[long_name] = answer
