@@ -56,7 +56,7 @@ class JsonGetter(UrlData):
         self.data = self._create_json_msgs()
         self.entries = self._create_entries_blob()
 
-    def _create_json_msgs(self):
+    def _create_json_msgs(self, short=False):
         """
         Get key/answer pairs from supplied json.  User should be able to supply
         word or number key.
@@ -65,11 +65,13 @@ class JsonGetter(UrlData):
         msgs = {}
         for entry in self.my_json:
             short_name = entry['FAQ_Number'].lstrip('0')
+            short_name_no_quest = short_name + 's'
             long_name = entry['Reference_Name'].lower()
             long_quest = '**' + entry['Full_Question'] + '**'
             answer = entry['Answer']
             msgs[short_name] = '\n'.join([long_quest, answer])
             msgs[long_name] = '\n'.join([long_quest, answer])
+            msgs[short_name_no_quest] = answer
         return msgs
 
     def _create_entries_blob(self):
