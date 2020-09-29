@@ -22,7 +22,7 @@ class HelpCreate:
         :return:
         """
         help_info = []
-        help_tmpl = Template('$short_name - $long_name - $question')
+        help_tmpl = Template('**$short_name** - $long_name - *$question*')
         for key, val in self.data.items():
             help_info.append(help_tmpl.substitute(val))
         return help_info
