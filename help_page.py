@@ -68,8 +68,10 @@ class HelpCreate:
         """
         content = {'help': {'command': 'help', 'descrip': 'This help page.'},
                    'entries': {'command': 'entries', 'descrip': 'List all available FAQs.'},
-                   'faq': {'command': '{FAQ}', 'descrip': 'FAQ name or number, as listed in /entries. (Ex: */1*)'},
+                   'faq': {'command': '{FAQ}', 'descrip': 'FAQ name or number, as listed in /entries. (*Ex: /1*)'},
                    'faq_short': {'command': '{FAQ}s', 'descrip': 'FAQ name or number, as listed in /entries, '
-                                                                 'without question header. (Ex: */1s*)'}
+                                                                 'without question header. (*Ex: /1s*)'},
+                   'faq_private': {'command': '{FAQ}p', 'descrip': 'FAQ name or number, as listed in /entries, '
+                                                                 'without question header. (*Ex: /1p*)'}
                    }
         return content

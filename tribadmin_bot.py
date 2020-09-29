@@ -43,7 +43,10 @@ def main():
         term = message.content.lstrip(CMD_PREFIX)
         if term.lower() in msgs.data:
             response = msgs.data[term]
-            await message.channel.send(response)
+            if term.lower().endswith('p') and term.lower().rstrip('p') in msgs.data:
+                await message.author.send(response)
+            else:
+                await message.channel.send(response)
         elif term == 'entries':
             response = HelpCreate(msgs.entries, cmd_char=CMD_PREFIX).final_entries
             for resp in response:

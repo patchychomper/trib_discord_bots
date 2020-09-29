@@ -67,11 +67,13 @@ class JsonGetter(UrlData):
             short_name = entry['FAQ_Number'].lstrip('0')
             short_name_no_quest = short_name + 's'
             long_name = entry['Reference_Name'].lower()
+            private_resp = short_name + 'p'
             long_quest = '**' + entry['Full_Question'] + '**'
             answer = entry['Answer']
             msgs[short_name] = '\n'.join([long_quest, answer])
             msgs[long_name] = '\n'.join([long_quest, answer])
             msgs[short_name_no_quest] = answer
+            msgs[private_resp] = '\n'.join([long_quest, answer])
         return msgs
 
     def _create_entries_blob(self):
