@@ -50,7 +50,8 @@ class HelpCreate:
         k, m = divmod(len(a), n)
         return (a[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n))
 
-    def _entry_gather(self, split, data):
+    @staticmethod
+    def _entry_gather(split, data):
         """
         Discord has a limit of 2000 characters per response, so we need to split help screen in to multiple reponses.
         :return:
@@ -61,7 +62,8 @@ class HelpCreate:
             new_help.append(to_add)
         return new_help
 
-    def _help_page(self):
+    @staticmethod
+    def _help_page():
         """
         Provide basic help page that lists commands.
         :return:
@@ -72,6 +74,6 @@ class HelpCreate:
                    'faq_short': {'command': '{FAQ}s', 'descrip': 'FAQ name or number, as listed in /entries, '
                                                                  'without question header. (*Ex: /1s*)'},
                    'faq_private': {'command': '{FAQ}p', 'descrip': 'FAQ name or number, as listed in /entries, '
-                                                                 'without question header. (*Ex: /1p*)'}
+                                                                   'without question header. (*Ex: /1p*)'}
                    }
         return content
