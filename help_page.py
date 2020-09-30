@@ -58,7 +58,7 @@ class HelpCreate:
         """
         new_help = []
         for entry in split:
-            to_add = '\n'.join(data[entry[0]:entry[-1]])
+            to_add = '\n'.join(data[entry[0]:entry[-1]+1])
             new_help.append(to_add)
         return new_help
 
